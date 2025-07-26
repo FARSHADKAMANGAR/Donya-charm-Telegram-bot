@@ -8,7 +8,7 @@ from telegram.ext import (
 )
 import asyncio
 
-TOKEN = "8479547692:AAGCDvqDSr3XvtYZ3PSXz7UnRHPTrWYn0JE"
+TOKEN = "8479547692:AAGCDvh8sh2qDSr3XvtYZ3PSXz7UnRHPTrWYn0JE"
 CHANNEL_USERNAME = "Charm_World"
 
 JOIN_MESSAGE = """*سلام 👋*
