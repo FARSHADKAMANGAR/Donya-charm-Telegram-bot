@@ -2,7 +2,7 @@ from telegram import Update
 from telegram.constants import ParseMode
 from telegram.ext import ApplicationBuilder, MessageHandler, ContextTypes, filters
 
-TOKEN = "8479592:AAGCDvqDSXvtYZSXz7UnRHrWYn0JE"
+TOKEN = "8479547692:AAGCDvqDSr3XvtYZ3PSXz7UnRHPTrWYn0JE"
 
 MESSAGE_TEXT = """*ربات در حال بروزرسانی است و در دسترس نیست . . . 🌜*
 *منتظر بمانید یا اگر مشکلی دارید ، با پشتیبان ربات در ارتباط باشید ♻️*
