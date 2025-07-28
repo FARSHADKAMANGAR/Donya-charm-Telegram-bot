@@ -1,182 +1,119 @@
-<!DOCTYPE html>
-<html lang="fa">
-<head>
-  <meta charset="UTF-8">
-  <title>BeGaiL SenDeR</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn&display=swap" rel="stylesheet">
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Vazirmatn', sans-serif;
-      background: radial-gradient(circle at center, #1f1c2c, #928dab);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      overflow: hidden;
-      color: #fff;
+<!-- استایل گرافیکی -->
+<style>
+  body {
+    font-family: 'Vazirmatn', sans-serif;
+    background: linear-gradient(135deg, #ece9e6, #ffffff);
+    display: flex; justify-content: center; align-items: center;
+    height: 100vh; margin: 0;
+  }
+
+  .form-container {
+    background: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    backdrop-filter: blur(8px);
+    border-radius: 15px;
+    padding: 20px;
+    width: 90%;
+    max-width: 400px;
+  }
+
+  input, textarea {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    box-shadow: inset 2px 2px 5px #aaa, inset -2px -2px 5px #fff;
+    font-size: 14px;
+    transition: box-shadow 0.3s ease;
+  }
+
+  input:focus, textarea:focus {
+    box-shadow: 0 0 10px #00c6ff;
+    outline: none;
+  }
+
+  button {
+    background: #00c6ff;
+    color: white;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(0, 198, 255, 0.5);
+    transition: all 0.3s ease;
+  }
+
+  button:hover {
+    background: #009ddc;
+    box-shadow: 0 6px 20px rgba(0, 157, 220, 0.6);
+  }
+</style>
+
+<!-- فرم HTML -->
+<div class="form-container">
+  <input id="token" placeholder="توکن بات">
+  <input id="chatid" placeholder="شناسه چت">
+  <textarea id="message" placeholder="پیام"></textarea>
+  <input id="repeat" type="number" min="1" max="100" placeholder="تعداد تکرار">
+  <button onclick="sendMessage()">بفرست 🚀</button>
+</div>
+
+<!-- صدای موفقیت -->
+<audio id="success-sound" src="https://orangefreesounds.com/wp-content/uploads/2024/08/Success-notification-tone.mp3"></audio>
+
+<!-- اسکریپت کامل -->
+<script>
+  document.querySelectorAll("input, textarea").forEach(el => {
+    el.addEventListener("focus", () => {
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+  });
+
+  function showNotification(msg) {
+    alert(msg); // می‌تونی با toast یا modal جایگزینش کنی
+  }
+
+  function playSound() {
+    document.getElementById("success-sound").play();
+  }
+
+  function sendMessage() {
+    const token = document.getElementById("token").value;
+    const chatid = document.getElementById("chatid").value;
+    const msg = document.getElementById("message").value;
+    const repeat = parseInt(document.getElementById("repeat").value);
+
+    if (!token || !chatid || !msg || isNaN(repeat) || repeat <= 0) {
+      showNotification("فیلدها را درست پر کن 😅");
+      return;
     }
 
-    h1 {
-      font-size: 3em;
-      text-align: center;
-      animation: glow 3s infinite alternate;
-    }
-
-    @keyframes glow {
-      from { text-shadow: 0 0 10px #ff6ec7, 0 0 20px #ff6ec7; }
-      to { text-shadow: 0 0 40px #00e5ff, 0 0 50px #00e5ff; }
-    }
-
-    .image-box {
-      margin-top: 20px;
-      transform: scale(0.95) rotate(-5deg);
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 0 30px rgba(255,255,255,0.4);
-      transition: transform 0.4s ease;
-    }
-
-    .image-box:hover {
-      transform: scale(1.05) rotate(0deg);
-    }
-
-    img {
-      width: 270px;
-      height: 270px;
-      object-fit: cover;
-    }
-
-    .form {
-      margin-top: 30px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-      width: 85%;
-      max-width: 300px;
-    }
-
-    input, textarea {
-      padding: 12px;
-      border: none;
-      border-radius: 12px;
-      font-size: 1em;
-      width: 100%;
-    }
-
-    button {
-      padding: 12px;
-      background: linear-gradient(45deg, #ff00cc, #3333ff);
-      color: white;
-      border: none;
-      border-radius: 12px;
-      font-size: 1.1em;
-      cursor: pointer;
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); box-shadow: 0 0 0 #ff00cc; }
-      50% { transform: scale(1.05); box-shadow: 0 0 15px #ff00cc; }
-      100% { transform: scale(1); box-shadow: 0 0 0 #ff00cc; }
-    }
-
-    .notification {
-      position: fixed;
-      bottom: 20px;
-      padding: 15px;
-      border-radius: 10px;
-      color: white;
-      font-weight: bold;
-      box-shadow: 0 0 10px rgba(255,255,255,0.3);
-      animation: fadeIn 0.7s ease;
-    }
-
-    .success { background: #00c853; }
-    .error { background: #d50000; }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .loader {
-      display: none;
-      margin-top: 10px;
-      border: 5px solid #f3f3f3;
-      border-top: 5px solid #ff00cc;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-  </style>
-</head>
-<body>
-
-  <h1>BeGaiL SenDeR</h1>
-
-  <div class="image-box">
-    <img src="https://uploadkon.ir/uploads/a97928_25IMG-20250727-205553-524.jpg" alt="BeGaiL Image">
-  </div>
-
-  <div class="form">
-    <input id="token" placeholder="توکن ربات">
-    <input id="chatid" placeholder="آیدی عددی">
-    <textarea id="message" placeholder="متن پیام"></textarea>
-    <button onclick="sendMessage()">ارسال پیام</button>
-    <div class="loader" id="loader"></div>
-  </div>
-
-  <div id="notify" class="notification" style="display:none;"></div>
-
-  <script>
-    function showNotification(text, isSuccess=true) {
-      const notify = document.getElementById("notify");
-      notify.innerText = text;
-      notify.className = `notification ${isSuccess ? "success" : "error"}`;
-      notify.style.display = "block";
-      setTimeout(() => { notify.style.display = "none"; }, 4000);
-    }
-
-    function sendMessage() {
-      const token = document.getElementById("token").value;
-      const chatid = document.getElementById("chatid").value;
-      const msg = document.getElementById("message").value;
-      const loader = document.getElementById("loader");
-
-      if (!token || !chatid || !msg) {
-        showNotification("همه فیلدها رو پر کن!", false);
-        return;
-      }
-
-      loader.style.display = "block";
-
+    let count = 0;
+    function loopSend() {
       fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatid}&text=${encodeURIComponent(msg)}`)
         .then(res => res.json())
         .then(data => {
-          loader.style.display = "none";
+          count++;
           if (data.ok) {
-            showNotification("پیام با موفقیت ارسال شد ✅");
+            playSound();
+            console.log(`✅ پیام ${count} ارسال شد`);
           } else {
-            showNotification(`خطا: ${data.description}`, false);
+            console.log(`❌ پیام ${count} خطا: ${data.description}`);
+          }
+          if (count < repeat) {
+            loopSend();
+          } else {
+            showNotification("همه پیام‌ها رفتن 🎉");
           }
         })
         .catch(() => {
-          loader.style.display = "none";
-          showNotification("ارسال ناموفق بود ❌", false);
+          showNotification("خطای شبکه یا توکن اشتباهه 😬");
         });
     }
-  </script>
 
-</body>
-</html>
+    loopSend();
+  }
+</script>
