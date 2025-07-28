@@ -3,95 +3,97 @@
 <head>
   <meta charset="UTF-8">
   <title>BeGaiL SenDeR</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       padding: 0;
-      background: linear-gradient(135deg, #1f1c2c, #928dab);
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Vazirmatn', sans-serif;
+      background: radial-gradient(circle at center, #1f1c2c, #928dab);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
+      min-height: 100vh;
       overflow: hidden;
-      color: white;
+      color: #fff;
     }
 
     h1 {
-      font-size: 3.5em;
+      font-size: 3em;
       text-align: center;
-      animation: glow 2s infinite alternate;
-      margin-bottom: 20px;
+      animation: glow 3s infinite alternate;
     }
 
     @keyframes glow {
-      from { text-shadow: 0 0 10px #ff00cc, 0 0 20px #ff00cc; }
-      to { text-shadow: 0 0 30px #00ffff, 0 0 40px #00ffff; }
+      from { text-shadow: 0 0 10px #ff6ec7, 0 0 20px #ff6ec7; }
+      to { text-shadow: 0 0 40px #00e5ff, 0 0 50px #00e5ff; }
     }
 
     .image-box {
-      transform: rotate(30deg);
-      border-radius: 15px;
+      margin-top: 20px;
+      transform: scale(0.95) rotate(-5deg);
+      border-radius: 20px;
       overflow: hidden;
-      box-shadow: 0 0 25px rgba(255,255,255,0.5);
-      transition: all 0.3s ease;
+      box-shadow: 0 0 30px rgba(255,255,255,0.4);
+      transition: transform 0.4s ease;
     }
 
     .image-box:hover {
-      transform: rotate(0deg) scale(1.1);
-      box-shadow: 0 0 50px rgba(255,255,255,0.8);
+      transform: scale(1.05) rotate(0deg);
     }
 
     img {
-      width: 250px;
-      height: 250px;
+      width: 270px;
+      height: 270px;
       object-fit: cover;
     }
 
     .form {
-      margin-top: 40px;
+      margin-top: 30px;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 10px;
+      width: 85%;
+      max-width: 300px;
     }
 
     input, textarea {
-      padding: 10px;
-      width: 250px;
+      padding: 12px;
       border: none;
-      border-radius: 10px;
+      border-radius: 12px;
       font-size: 1em;
+      width: 100%;
     }
 
     button {
-      padding: 10px 20px;
-      border: none;
-      background: #ff00cc;
+      padding: 12px;
+      background: linear-gradient(45deg, #ff00cc, #3333ff);
       color: white;
-      border-radius: 10px;
-      font-size: 1.2em;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.1em;
       cursor: pointer;
-      animation: pulse 1.5s infinite;
+      animation: pulse 2s infinite;
     }
 
     @keyframes pulse {
-      0% { transform: scale(1); box-shadow: 0 0 0px #ff00cc; }
-      50% { transform: scale(1.05); box-shadow: 0 0 20px #ff00cc; }
-      100% { transform: scale(1); box-shadow: 0 0 0px #ff00cc; }
+      0% { transform: scale(1); box-shadow: 0 0 0 #ff00cc; }
+      50% { transform: scale(1.05); box-shadow: 0 0 15px #ff00cc; }
+      100% { transform: scale(1); box-shadow: 0 0 0 #ff00cc; }
     }
 
     .notification {
       position: fixed;
-      bottom: 30px;
-      background: #222;
-      padding: 20px;
-      border-radius: 15px;
+      bottom: 20px;
+      padding: 15px;
+      border-radius: 10px;
       color: white;
       font-weight: bold;
-      box-shadow: 0 0 15px rgba(255,255,255,0.4);
-      animation: fadeIn 1s ease;
+      box-shadow: 0 0 10px rgba(255,255,255,0.3);
+      animation: fadeIn 0.7s ease;
     }
 
     .success { background: #00c853; }
@@ -100,6 +102,22 @@
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
+    }
+
+    .loader {
+      display: none;
+      margin-top: 10px;
+      border: 5px solid #f3f3f3;
+      border-top: 5px solid #ff00cc;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
   </style>
 </head>
@@ -116,6 +134,7 @@
     <input id="chatid" placeholder="آیدی عددی">
     <textarea id="message" placeholder="متن پیام"></textarea>
     <button onclick="sendMessage()">ارسال پیام</button>
+    <div class="loader" id="loader"></div>
   </div>
 
   <div id="notify" class="notification" style="display:none;"></div>
@@ -126,31 +145,34 @@
       notify.innerText = text;
       notify.className = `notification ${isSuccess ? "success" : "error"}`;
       notify.style.display = "block";
-      setTimeout(() => {
-        notify.style.display = "none";
-      }, 4000);
+      setTimeout(() => { notify.style.display = "none"; }, 4000);
     }
 
     function sendMessage() {
       const token = document.getElementById("token").value;
       const chatid = document.getElementById("chatid").value;
       const msg = document.getElementById("message").value;
+      const loader = document.getElementById("loader");
 
       if (!token || !chatid || !msg) {
         showNotification("همه فیلدها رو پر کن!", false);
         return;
       }
 
+      loader.style.display = "block";
+
       fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatid}&text=${encodeURIComponent(msg)}`)
         .then(res => res.json())
         .then(data => {
+          loader.style.display = "none";
           if (data.ok) {
             showNotification("پیام با موفقیت ارسال شد ✅");
           } else {
             showNotification(`خطا: ${data.description}`, false);
           }
         })
-        .catch(err => {
+        .catch(() => {
+          loader.style.display = "none";
           showNotification("ارسال ناموفق بود ❌", false);
         });
     }
