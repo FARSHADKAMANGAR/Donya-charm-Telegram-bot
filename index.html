@@ -1,104 +1,33 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>BeGaiL SenDeR</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BeGaiL Sender</title>
   <style>
     body {
-      background: #0f0f0f;
-      color: #ffffff;
-      font-family: 'Vazirmatn', sans-serif;
-      text-align: center;
       margin: 0;
-      padding: 0;
-    }
-
-    .title {
-      font-size: 2.5em;
-      margin-top: 40px;
-      text-shadow: 0 0 10px #00ffea;
-      animation: typing 3s steps(12, end), blink 0.5s step-end infinite;
-      white-space: nowrap;
-      overflow: hidden;
-      border-right: 3px solid #00ffea;
-      width: 12ch;
-      margin: auto;
-    }
-
-    @keyframes typing {
-      from { width: 0; }
-      to { width: 12ch; }
-    }
-    @keyframes blink {
-      from, to { border-color: transparent; }
-      50% { border-color: #00ffea; }
-    }
-
-    .image-container {
-      margin: 50px auto;
-      width: 300px;
-      height: auto;
-    }
-
-    img {
-      max-width: 100%;
-      border-radius: 30px;
-      box-shadow: 0 0 20px #00ffd5;
-    }
-
-    form {
-      margin-top: 40px;
-    }
-
-    input, textarea {
-      padding: 10px;
-      margin: 10px;
-      border-radius: 10px;
-      border: none;
-      width: 80%;
-      background-color: #1c1c1c;
+      font-family: 'Vazir', sans-serif;
+      background: linear-gradient(-45deg, #1f1c2c, #928dab, #1f1c2c, #7a7a7a);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
       color: #fff;
     }
 
-    button {
-      padding: 12px 25px;
-      border: none;
-      border-radius: 10px;
-      background-color: #00ffea;
-      color: #0f0f0f;
-      font-weight: bold;
-      cursor: pointer;
+    @keyframes gradientBG {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
     }
 
-    button:active {
-      transform: scale(0.98);
+    h1 {
+      text-align: center;
+      font-size: 3em;
+      margin-top: 40px;
+      animation: slideIn 1.5s ease forwards;
     }
 
-    audio {
-      display: none;
+    @keyframes slideIn {
+      0% {opacity: 0; transform: translateY(-30px);}
+      100% {opacity: 1; transform: translateY(0);}
     }
-  </style>
-</head>
-<body>
-  <div class="title">BeGaiL SenDeR</div>
-
-  <div class="image-container">
-    <img src="https://uploadkon.ir/uploads/a97928_25IMG-20250727-205553-524.jpg" alt="BeGaiL Image">
-  </div>
-
-  <form onsubmit="playSound(); return false;">
-    <input type="text" placeholder="نام شما">
-    <textarea placeholder="پیام شما"></textarea>
-    <button type="submit">ارسال</button>
-  </form>
-
-  <audio id="successSound" src="https://www.soundjay.com/buttons/sounds/button-16.mp3"></audio>
-
-  <script>
-    function playSound() {
-      document.getElementById('successSound').play();
-    }
-  </script>
-</body>
-</html>
