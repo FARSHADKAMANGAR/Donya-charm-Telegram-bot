@@ -1,119 +1,104 @@
-<!-- استایل گرافیکی -->
-<style>
-  body {
-    font-family: 'Vazirmatn', sans-serif;
-    background: linear-gradient(135deg, #ece9e6, #ffffff);
-    display: flex; justify-content: center; align-items: center;
-    height: 100vh; margin: 0;
-  }
-
-  .form-container {
-    background: rgba(255, 255, 255, 0.3);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-    backdrop-filter: blur(8px);
-    border-radius: 15px;
-    padding: 20px;
-    width: 90%;
-    max-width: 400px;
-  }
-
-  input, textarea {
-    width: 100%;
-    margin-bottom: 15px;
-    padding: 10px;
-    border-radius: 10px;
-    border: none;
-    box-shadow: inset 2px 2px 5px #aaa, inset -2px -2px 5px #fff;
-    font-size: 14px;
-    transition: box-shadow 0.3s ease;
-  }
-
-  input:focus, textarea:focus {
-    box-shadow: 0 0 10px #00c6ff;
-    outline: none;
-  }
-
-  button {
-    background: #00c6ff;
-    color: white;
-    padding: 10px;
-    width: 100%;
-    border: none;
-    border-radius: 10px;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 4px 14px rgba(0, 198, 255, 0.5);
-    transition: all 0.3s ease;
-  }
-
-  button:hover {
-    background: #009ddc;
-    box-shadow: 0 6px 20px rgba(0, 157, 220, 0.6);
-  }
-</style>
-
-<!-- فرم HTML -->
-<div class="form-container">
-  <input id="token" placeholder="توکن بات">
-  <input id="chatid" placeholder="شناسه چت">
-  <textarea id="message" placeholder="پیام"></textarea>
-  <input id="repeat" type="number" min="1" max="100" placeholder="تعداد تکرار">
-  <button onclick="sendMessage()">بفرست 🚀</button>
-</div>
-
-<!-- صدای موفقیت -->
-<audio id="success-sound" src="https://orangefreesounds.com/wp-content/uploads/2024/08/Success-notification-tone.mp3"></audio>
-
-<!-- اسکریپت کامل -->
-<script>
-  document.querySelectorAll("input, textarea").forEach(el => {
-    el.addEventListener("focus", () => {
-      el.scrollIntoView({ behavior: "smooth", block: "center" });
-    });
-  });
-
-  function showNotification(msg) {
-    alert(msg); // می‌تونی با toast یا modal جایگزینش کنی
-  }
-
-  function playSound() {
-    document.getElementById("success-sound").play();
-  }
-
-  function sendMessage() {
-    const token = document.getElementById("token").value;
-    const chatid = document.getElementById("chatid").value;
-    const msg = document.getElementById("message").value;
-    const repeat = parseInt(document.getElementById("repeat").value);
-
-    if (!token || !chatid || !msg || isNaN(repeat) || repeat <= 0) {
-      showNotification("فیلدها را درست پر کن 😅");
-      return;
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BeGaiL SenDeR</title>
+  <style>
+    body {
+      background: #0f0f0f;
+      color: #ffffff;
+      font-family: 'Vazirmatn', sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
     }
 
-    let count = 0;
-    function loopSend() {
-      fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatid}&text=${encodeURIComponent(msg)}`)
-        .then(res => res.json())
-        .then(data => {
-          count++;
-          if (data.ok) {
-            playSound();
-            console.log(`✅ پیام ${count} ارسال شد`);
-          } else {
-            console.log(`❌ پیام ${count} خطا: ${data.description}`);
-          }
-          if (count < repeat) {
-            loopSend();
-          } else {
-            showNotification("همه پیام‌ها رفتن 🎉");
-          }
-        })
-        .catch(() => {
-          showNotification("خطای شبکه یا توکن اشتباهه 😬");
-        });
+    .title {
+      font-size: 2.5em;
+      margin-top: 40px;
+      text-shadow: 0 0 10px #00ffea;
+      animation: typing 3s steps(12, end), blink 0.5s step-end infinite;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 3px solid #00ffea;
+      width: 12ch;
+      margin: auto;
     }
 
-    loopSend();
-  }
-</script>
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 12ch; }
+    }
+    @keyframes blink {
+      from, to { border-color: transparent; }
+      50% { border-color: #00ffea; }
+    }
+
+    .image-container {
+      margin: 50px auto;
+      width: 300px;
+      height: auto;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 30px;
+      box-shadow: 0 0 20px #00ffd5;
+    }
+
+    form {
+      margin-top: 40px;
+    }
+
+    input, textarea {
+      padding: 10px;
+      margin: 10px;
+      border-radius: 10px;
+      border: none;
+      width: 80%;
+      background-color: #1c1c1c;
+      color: #fff;
+    }
+
+    button {
+      padding: 12px 25px;
+      border: none;
+      border-radius: 10px;
+      background-color: #00ffea;
+      color: #0f0f0f;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    audio {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="title">BeGaiL SenDeR</div>
+
+  <div class="image-container">
+    <img src="https://uploadkon.ir/uploads/a97928_25IMG-20250727-205553-524.jpg" alt="BeGaiL Image">
+  </div>
+
+  <form onsubmit="playSound(); return false;">
+    <input type="text" placeholder="نام شما">
+    <textarea placeholder="پیام شما"></textarea>
+    <button type="submit">ارسال</button>
+  </form>
+
+  <audio id="successSound" src="https://www.soundjay.com/buttons/sounds/button-16.mp3"></audio>
+
+  <script>
+    function playSound() {
+      document.getElementById('successSound').play();
+    }
+  </script>
+</body>
+</html>
