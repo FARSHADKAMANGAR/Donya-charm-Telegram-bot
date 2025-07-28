@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <title>BeGaiL SenDeR</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #1f1c2c, #928dab);
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+      color: white;
+    }
+
+    h1 {
+      font-size: 3.5em;
+      text-align: center;
+      animation: glow 2s infinite alternate;
+      margin-bottom: 20px;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #ff00cc, 0 0 20px #ff00cc; }
+      to { text-shadow: 0 0 30px #00ffff, 0 0 40px #00ffff; }
+    }
+
+    .image-box {
+      transform: rotate(30deg);
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 0 25px rgba(255,255,255,0.5);
+      transition: all 0.3s ease;
+    }
+
+    .image-box:hover {
+      transform: rotate(0deg) scale(1.1);
+      box-shadow: 0 0 50px rgba(255,255,255,0.8);
+    }
+
+    img {
+      width: 250px;
+      height: 250px;
+      object-fit: cover;
+    }
+
+    .form {
+      margin-top: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    input, textarea {
+      padding: 10px;
+      width: 250px;
+      border: none;
+      border-radius: 10px;
+      font-size: 1em;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      background: #ff00cc;
+      color: white;
+      border-radius: 10px;
+      font-size: 1.2em;
+      cursor: pointer;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); box-shadow: 0 0 0px #ff00cc; }
+      50% { transform: scale(1.05); box-shadow: 0 0 20px #ff00cc; }
+      100% { transform: scale(1); box-shadow: 0 0 0px #ff00cc; }
+    }
+
+    .notification {
+      position: fixed;
+      bottom: 30px;
+      background: #222;
+      padding: 20px;
+      border-radius: 15px;
+      color: white;
+      font-weight: bold;
+      box-shadow: 0 0 15px rgba(255,255,255,0.4);
+      animation: fadeIn 1s ease;
+    }
+
+    .success { background: #00c853; }
+    .error { background: #d50000; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>BeGaiL SenDeR</h1>
+
+  <div class="image-box">
+    <img src="https://uploadkon.ir/uploads/a97928_25IMG-20250727-205553-524.jpg" alt="BeGaiL Image">
+  </div>
+
+  <div class="form">
+    <input id="token" placeholder="توکن ربات">
+    <input id="chatid" placeholder="آیدی عددی">
+    <textarea id="message" placeholder="متن پیام"></textarea>
+    <button onclick="sendMessage()">ارسال پیام</button>
+  </div>
+
+  <div id="notify" class="notification" style="display:none;"></div>
+
+  <script>
+    function showNotification(text, isSuccess=true) {
+      const notify = document.getElementById("notify");
+      notify.innerText = text;
+      notify.className = `notification ${isSuccess ? "success" : "error"}`;
+      notify.style.display = "block";
+      setTimeout(() => {
+        notify.style.display = "none";
+      }, 4000);
+    }
+
+    function sendMessage() {
+      const token = document.getElementById("token").value;
+      const chatid = document.getElementById("chatid").value;
+      const msg = document.getElementById("message").value;
+
+      if (!token || !chatid || !msg) {
+        showNotification("همه فیلدها رو پر کن!", false);
+        return;
+      }
+
+      fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatid}&text=${encodeURIComponent(msg)}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.ok) {
+            showNotification("پیام با موفقیت ارسال شد ✅");
+          } else {
+            showNotification(`خطا: ${data.description}`, false);
+          }
+        })
+        .catch(err => {
+          showNotification("ارسال ناموفق بود ❌", false);
+        });
+    }
+  </script>
+
+</body>
+</html>
