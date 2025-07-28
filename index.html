@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <title>دنیای چرم | فروشگاه کیف و کفش چرمی</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Vazirmatn', sans-serif;
+      background: linear-gradient(135deg, #2c1e1e, #000);
+      color: #fff;
+      overflow-x: hidden;
+      transition: background 0.5s, color 0.5s;
+    }
+    header {
+      text-align: center;
+      padding: 100px 20px 50px;
+      background-image: url('https://www.istockphoto.com/photo/leather-shoes-and-bag-gm1174697162-327237993');
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+    header::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+    }
+    header h1 {
+      position: relative;
+      font-size: 3rem;
+      z-index: 1;
+      animation: typing 4s steps(30, end), blink .75s step-end infinite;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 3px solid #fff;
+    }
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+    @keyframes blink {
+      50% { border-color: transparent }
+    }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      padding: 50px;
+    }
+    .card {
+      background: rgba(255,255,255,0.05);
+      border-radius: 15px;
+      padding: 20px;
+      text-align: center;
+      transition: transform .4s, box-shadow .4s;
+      backdrop-filter: blur(10px);
+      animation: fadeInUp 1s ease forwards;
+      opacity: 0;
+    }
+    .card:hover {
+      transform: scale(1.05) rotate(-1deg);
+      box-shadow: 0 0 30px #ff4b2b;
+    }
+    .card img {
+      width: 100%;
+      border-radius: 10px;
+    }
+    .btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 25px;
+      background: #ff4b2b;
+      color: white;
+      border-radius: 30px;
+      font-weight: bold;
+      box-shadow: 0 0 20px #ff4b2b;
+      transition: transform .3s;
+    }
+    .btn:hover {
+      transform: scale(1.1);
+    }
+    @keyframes fadeInUp {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .toggle-mode {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: #fff;
+      color: #000;
+      padding: 10px 20px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: bold;
+      z-index: 10;
+    }
+    footer {
+      text-align: center;
+      padding: 50px;
+      font-size: 1.2rem;
+      opacity: 0.7;
+    }
+    .dark-mode {
+      background: #fff;
+      color: #000;
+    }
+    .dark-mode .card {
+      background: rgba(0,0,0,0.05);
+    }
+  </style>
+</head>
+<body>
+  <div class="toggle-mode" onclick="toggleDark()">🌓 حالت تاریک/روشن</div>
+  <header>
+    <h1>دنیای چرم</h1>
+  </header>
+
+  <section class="product-grid">
+    <div class="card">
+      <img src="https://uploadkon.ir/uploads/d2ce28_25afag-leather-1212-Haney-Crocodile.jpg" alt="کیف چرمی">
+      <h3>کیف چرمی مسافرتی</h3>
+      <p>طراحی کلاسیک با محفظه کفش</p>
+      <a href="#" class="btn">افزودن به سبد</a>
+    </div>
+    <div class="card">
+      <img src="https://tailormadeshoe.com/cdn/shop/products/LeatherSet.jpg" alt="ست کیف و کفش">
+      <h3>ست کیف و کفش چرمی مردانه</h3>
+      <p>دست‌دوز با چرم طبیعی</p>
+      <a href="#" class="btn">افزودن به سبد</a>
+    </div>
+    <div class="card">
+      <img src="https://www.istockphoto.com/photo/leather-shoes-and-bag-gm1174697162-327237993" alt="کیف زنانه">
+      <h3>کیف دستی چرمی زنانه</h3>
+      <p>رنگ زرشکی با طراحی لوکس</p>
+      <a href="#" class="btn">افزودن به سبد</a>
+    </div>
+  </section>
+
+  <footer>
+    contact us : 02183774
+  </footer>
+
+  <audio autoplay loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    function toggleDark() {
+      document.body.classList.toggle("dark-mode");
+    }
+    const cards = document.querySelectorAll('.card');
+    cards.forEach((card, i) => {
+      setTimeout(() => {
+        card.style.opacity = 1;
+      }, i * 300);
+    });
+  </script>
+</body>
+</html>
