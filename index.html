@@ -1,1 +1,328 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <title>دنیای چرم | leather world</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap');
 
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    .view-btn {
+  background: linear-gradient(135deg, #dbcfc3, #ded6ce);
+  color: #4a2c2a;
+  font-family: 'Vazirmatn', sans-serif;
+  font-size: 16px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.view-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+.view-btn::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(255,255,255,0.3);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.view-btn:hover::before {
+  opacity: 1;
+}
+
+.view-btn:active {
+  transform: scale(0.96);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.view-btn::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.4s ease, height 0.4s ease, opacity 0.4s ease;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.view-btn:active::after {
+  width: 120px;
+  height: 120px;
+  opacity: 1;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 1rem;
+}
+    .card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 24px;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  height: 100%; /* برای تطابق ارتفاع */
+}
+
+.card-content {
+  flex-grow: 1;
+  text-align: center;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: center;
+  margin-top: auto;
+  padding-top: 1rem;
+}
+    .card img {
+  border-radius: 16px;
+}
+    .header-box {
+  background: linear-gradient(135deg, #f5f5f5, #e6e6e6);
+  padding: 1.5rem 2rem;
+  border-radius: 24px;
+  margin: 2rem auto;
+  width: 90%;
+  max-width: 1000px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  font-family: 'Vazirmatn', sans-serif;
+  text-align: center;
+}
+
+
+    body {
+  font-family: 'Vazirmatn', sans-serif;
+  background: linear-gradient(to bottom, #f5f5f5, #e6e6e6);
+  color: #333;
+  overflow-x: hidden;
+  cursor: none;
+
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: 24px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  animation: fadeIn 2s ease;
+}
+
+    .cursor {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #333;
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s ease, background 0.3s ease;
+      z-index: 9999;
+      background: transparent;
+    }
+
+    header {
+      text-align: center;
+      padding: 3rem 1rem;
+      border-radius: 24px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      background: linear-gradient(135deg, #f5f5f5, #e6e6e6);
+      animation: fadeIn 2s ease;
+    }
+
+h1 {
+  font-size: 2.5rem;
+  animation: typing 4s steps(40, end), blink 0.7s step-end infinite;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 3px solid #333;
+  margin-bottom: 1rem;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blink {
+  50% { border-color: transparent }
+}
+
+/* کلاس جدید برای توقف چشمک‌زن */
+.stop-blink {
+  animation: none !important;
+  border-right: none;
+}
+
+nav {
+  margin-top: 1rem;
+}
+
+    nav a {
+      margin: 0 1rem;
+      text-decoration: none;
+      color: #6b4226;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #a0522d;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      padding: 2rem;
+      animation: fadeIn 1.5s ease;
+    }
+
+    .card {
+      background: white;
+      border-radius: 24px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+    }
+
+    .card img {
+      width: 100%;
+      display: block;
+    }
+
+    .card p {
+      padding: 1rem;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.8rem;
+      }
+      nav a {
+        display: block;
+        margin: 0.5rem 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="cursor"></div>
+
+  <header>
+    <h1>دنیای چرم</h1>
+    <nav>
+      <a href="#">خانه</a>
+      <a href="#">محصولات</a>
+      <a href="#">درباره ما</a>
+      <a href="#">تماس</a>
+    </nav>
+  </header>
+
+  <section class="gallery">
+    <div class="card">
+      <img src=https://uploadkon.ir/uploads/c5aa25_25Copilot-20250825-015100.png?text=اثر+اول" alt="اثر اول">
+      <p>کیف آلکاتراز</p>
+       <p class="description">250,000 تومان</p>
+      <button class="view-btn" onclick="window.open('https://www.google.com', '_blank')">مشاهده</button>
+    </div>
+    <div class="card">
+      <img src="https://uploadkon.ir/uploads/c5aa25_25Copilot-20250825-015100.png?text=اثر+دوم" alt="اثر دوم">
+      <p>کفش استرایک</p>
+       <p class="description">1.600.000 تومان</p>
+      <button class="view-btn" onclick="window.open('https://www.google.com', '_blank')">مشاهده</button>
+    </div>
+    <div class="card">
+      <img src="https://uploadkon.ir/uploads/c5aa25_25Copilot-20250825-015100.png?text=اثر+سوم" alt="اثر سوم">
+      <p>کمربند کلاسیکو</p>
+       <p class="description">450.000 تومان</p>
+      <button class="view-btn" onclick="window.open('https://www.google.com', '_blank')">مشاهده</button>
+    </div>
+     <div class="card">
+      <img src=https://uploadkon.ir/uploads/c5aa25_25Copilot-20250825-015100.png?text=اثر+اول" alt="اثر اول">
+      <p>دستکش ترایبرد</p>
+       <p class="description">320.000 تومان</p>
+      <button class="view-btn" onclick="window.open('https://www.google.com', '_blank')">مشاهده</button>
+     </div>
+    </div>
+     <div class="card">
+      <img src=https://uploadkon.ir/uploads/c5aa25_25Copilot-20250825-015100.png?text=اثر+اول" alt="اثر اول">
+      <p>دستبند گرینلوک</p>
+       <p class="description">180.000 تومان</p>
+      <button class="view-btn" onclick="window.open('https://www.google.com', '_blank')">مشاهده</button>
+     </div>
+    </div>
+     <div class="card">
+      <img src=https://uploadkon.ir/uploads/c5aa25_25Copilot-20250825-015100.png?text=اثر+اول" alt="اثر اول">
+      <p>گردنبند وایتلار</p>
+       <p class="description">320.000 تومان</p>
+      <button class="view-btn" onclick="window.open('https://www.google.com', '_blank')">مشاهده</button>
+     </div>
+     </div>
+     <div class="card">
+      <img src=https://uploadkon.ir/uploads/c5aa25_25Copilot-20250825-015100.png?text=اثر+اول" alt="اثر اول">
+      <p>انگشتر آرکا</p>
+       <p class="description">100.000 تومان</p>
+      <button class="view-btn" onclick="window.open('https://www.google.com', '_blank')">مشاهده</button>
+     </div>
+     </div>
+     <div class="card">
+      <img src=https://uploadkon.ir/uploads/c5aa25_25Copilot-20250825-015100.png?text=اثر+اول" alt="اثر اول">
+      <p>پابند رالتوک</p>
+       <p class="description">145.000 تومان</p>
+      <button class="view-btn" onclick="window.open('https://www.google.com', '_blank')">مشاهده</button>
+     </div>
+  </section>
+
+  <script>
+    const cursor = document.querySelector('.cursor');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
+
+    document.querySelectorAll('a, .card').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.style.background = '#333';
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.style.background = 'transparent';
+      });
+    });
+  </script>
+</body>
